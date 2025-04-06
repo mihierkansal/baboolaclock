@@ -3,6 +3,9 @@ body {
   font-size: 16px;
   background-image: url("/bg.png");
   background-size: cover;
+  @media screen and (max-width: 600px) {
+    scale: 0.7;
+  }
 }
 * {
   margin: 0;
@@ -22,7 +25,7 @@ body {
   height: var(--font-size-clock);
   margin-top: 0;
   margin-top: 0;
-  transition: all 0.5s;
+  transition: all 0.15s;
   width: 30px;
   background-color: rgba(41, 41, 41, 0.356);
   display: flex;
@@ -48,11 +51,14 @@ body {
   & > .numbers-cnt {
     display: flex;
     flex-direction: column;
-    transition: all 0.5s;
+
+    transition: all 0.25s;
+
+    &.fast {
+      transition: all 0s !important;
+    }
     font-size: var(--font-size-clock);
     & > .number-cnt {
-      transition: order 0.5s;
-
       height: var(--font-size-clock);
 
       & > .number {
@@ -66,6 +72,7 @@ body {
 
 .rollers-cnt {
   position: relative;
+  display: flex;
   &::after {
     content: "";
     position: absolute;
@@ -95,6 +102,7 @@ body {
 .clock {
   position: fixed;
   display: flex;
+  flex-direction: column;
   width: min-content;
   left: 50%;
   top: 50%;
@@ -126,4 +134,131 @@ body {
   color: transparent;
   background: radial-gradient(circle at 20% 0%, grey, black);
   background-clip: text;
+}
+
+.menu {
+  display: flex;
+  position: fixed;
+  width: min-content;
+  gap: 0.25rem;
+  padding: 0.25rem;
+  background: linear-gradient(to bottom, white, rgb(161, 161, 161));
+  border-radius: 999rem;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.555), inset 0 0 6px white;
+  left: 50%;
+  top: 1rem;
+  transform: translateX(-50%);
+  & > .menu-item {
+    padding: 0.5rem 1rem;
+    border-radius: 999rem;
+    cursor: pointer;
+    text-align: center;
+    text-shadow: 0 1px 1px white;
+    width: 7rem;
+    height: 2rem;
+    overflow: hidden;
+    box-shadow: inset 0 -1px 2px rgba(0, 0, 0, 0.656), 0 1px 1px white,
+      0 -1px 1px rgba(0, 0, 0, 0.242);
+    &:active,
+    &.active {
+      color: rgb(0, 102, 170);
+      padding-top: 0.6rem;
+      box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.656), 0 1px 1px white,
+        0 -1px 1px rgba(0, 0, 0, 0.242);
+    }
+  }
+}
+
+.btn {
+  --1-shadow: 0 3px 1px rgba(255, 255, 255, 0.395);
+  --2-shadow: 0 -3px 1px rgba(0, 0, 0, 0.175);
+
+  padding: 0.75rem 1rem;
+  line-height: 0.8em;
+  border-radius: 0.25rem;
+  outline: none;
+  height: 2.2rem;
+  border: 0;
+  font-weight: bold;
+  color: white;
+  cursor: pointer;
+  letter-spacing: 1px;
+  box-shadow: var(--1-shadow), var(--2-shadow), inset 0 -2px 1px black;
+  text-shadow: 0 1px 1px rgb(0, 0, 0);
+  background: linear-gradient(to bottom, rgb(64, 64, 64), rgb(30, 30, 30));
+
+  &.primary {
+    background: linear-gradient(to bottom, rgb(57, 57, 130), rgb(0, 0, 77));
+  }
+
+  &.danger {
+    background: linear-gradient(to bottom, rgb(201, 68, 68), rgb(105, 22, 22));
+  }
+
+  &:active {
+    padding-top: 0.8rem;
+    background: linear-gradient(to bottom, rgb(30, 30, 30), rgb(64, 64, 64));
+    box-shadow: var(--1-shadow), var(--2-shadow), inset 0 2px 1px black,
+      inset 0 0 1px black;
+    &.primary {
+      background: linear-gradient(to bottom, rgb(0, 0, 77), rgb(57, 57, 130));
+    }
+    &.danger {
+      background: linear-gradient(
+        to bottom,
+        rgb(105, 22, 22),
+        rgb(201, 68, 68)
+      );
+    }
+  }
+}
+
+.btns-cnt {
+  display: grid;
+  gap: 0.5rem;
+  margin-top: 1rem;
+  grid-template-columns: 1fr 1fr 1fr;
+}
+
+.light {
+  border-radius: 999rem;
+  width: 1rem;
+  height: 1rem;
+  background: transparent;
+  right: 1rem;
+  top: 1rem;
+  position: absolute;
+  backdrop-filter: blur(1px);
+
+  box-shadow: 0 2px 2px rgba(255, 255, 255, 0.5),
+    0 -2px 2px rgba(0, 0, 0, 0.473), inset 0 2px 1px rgba(255, 255, 255, 0.533),
+    inset 0 0 6px black;
+
+  &.blinking {
+    animation: blink-anim 1.5s linear infinite;
+  }
+}
+
+@keyframes blink-anim {
+  0% {
+    background: transparent;
+  }
+  30% {
+    background: transparent;
+  }
+  40% {
+    background: transparent;
+  }
+  50% {
+    background: red;
+  }
+  60% {
+    background: red;
+  }
+  90% {
+    background: red;
+  }
+  100% {
+    background: transparent;
+  }
 }
