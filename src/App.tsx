@@ -5,12 +5,16 @@ function App() {
   const minute = createSignal(new Date().getMinutes());
   const second = createSignal(new Date().getSeconds());
 
-  setInterval(() => {
+  const tick = () => {
     const date = new Date();
     hour[1](convertTo12Hour(date.getHours()));
     minute[1](date.getMinutes());
     second[1](date.getSeconds());
-  }, 1000);
+  };
+
+  tick();
+
+  setInterval(tick, 1000);
 
   return (
     <>
