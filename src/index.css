@@ -170,8 +170,8 @@ body {
 }
 
 .btn {
-  --1-shadow: 0 2px 2px rgba(255, 255, 255, 0.395);
-  --2-shadow: 0 -2px 2px rgba(0, 0, 0, 0.275);
+  --1-shadow: 0 1px 1px rgba(255, 255, 255, 0.395);
+  --2-shadow: 0 -1px 1px rgba(0, 0, 0, 0.275);
 
   padding: 0.75rem 1rem;
   line-height: 0.8em;
@@ -183,7 +183,8 @@ body {
   color: white;
   cursor: pointer;
   letter-spacing: 1px;
-  box-shadow: var(--1-shadow), var(--2-shadow), inset 0 -2px 1px black;
+  box-shadow: var(--1-shadow), var(--2-shadow),
+    inset 0 -2px 1px rgba(0, 0, 0, 0.359);
   text-shadow: 0 1px 1px rgb(0, 0, 0);
   background: linear-gradient(to bottom, rgb(64, 64, 64), rgb(30, 30, 30));
 
@@ -198,8 +199,8 @@ body {
   &:active {
     padding-top: 0.8rem;
     background: linear-gradient(to bottom, rgb(30, 30, 30), rgb(64, 64, 64));
-    box-shadow: var(--1-shadow), var(--2-shadow), inset 0 2px 1px black,
-      inset 0 0 1px black;
+    box-shadow: var(--1-shadow), var(--2-shadow),
+      inset 0 2px 1px rgba(0, 0, 0, 0.573), inset 0 0 1px black;
     &.primary {
       background: linear-gradient(to bottom, rgb(0, 0, 77), rgb(57, 57, 130));
     }
