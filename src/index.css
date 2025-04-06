@@ -108,8 +108,6 @@ body {
 }
 
 .metal {
-  position: relative;
-
   background-image: url("/metal.png");
 
   background-size: cover;
