@@ -7,7 +7,7 @@ function App() {
 
   setInterval(() => {
     const date = new Date();
-    hour[1](date.getHours() > 12 ? date.getHours() - 12 : date.getHours());
+    hour[1](convertTo12Hour(date.getHours()));
     minute[1](date.getMinutes());
     second[1](date.getSeconds());
   }, 1000);
@@ -79,5 +79,8 @@ function RollingNumberDisplay(props: { value: Accessor<number> }) {
     </>
   );
 }
-
+function convertTo12Hour(hour24: number) {
+  const hour12 = hour24 % 12 || 12; // Convert 0 (midnight) to 12 and handle afternoon hours
+  return hour12;
+}
 export default App;
