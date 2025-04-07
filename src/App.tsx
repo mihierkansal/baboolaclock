@@ -7,6 +7,8 @@ import {
   Switch,
 } from "solid-js";
 
+import "hacktimer";
+
 function App() {
   const tab = createSignal<"clock" | "timer" | "stopwatch">("clock");
 
