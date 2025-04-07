@@ -52,7 +52,7 @@ body {
     display: flex;
     flex-direction: column;
 
-    transition: all 0.25s;
+    transition: all 0.4s;
 
     &.fast {
       transition: all 0s !important;
