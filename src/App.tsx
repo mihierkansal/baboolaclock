@@ -10,7 +10,9 @@ import {
 import "hacktimer";
 
 function App() {
-  const tab = createSignal<"clock" | "timer" | "stopwatch">("clock");
+  const tab = createSignal<"clock" | "timer" | "stopwatch" | "world_clock">(
+    "world_clock"
+  );
 
   return (
     <>
@@ -39,6 +41,14 @@ function App() {
         >
           Stopwatch
         </div>
+        <div
+          onClick={() => {
+            tab[1]("world_clock");
+          }}
+          class={`menu-item ${tab[0]() === "world_clock" ? "active" : ""}`}
+        >
+          World
+        </div>
       </div>
       <Switch>
         <Match when={tab[0]() === "clock"}>
@@ -49,6 +59,9 @@ function App() {
         </Match>
         <Match when={tab[0]() === "stopwatch"}>
           <Stopwatch />
+        </Match>
+        <Match when={tab[0]() === "world_clock"}>
+          <WorldClock />
         </Match>
       </Switch>
     </>
@@ -279,6 +292,73 @@ function Clock() {
       </div>
     </>
   );
+}
+function WorldClock() {
+  const hour = createSignal(new Date().getHours());
+  const minute = createSignal(new Date().getMinutes());
+  const second = createSignal(new Date().getSeconds());
+
+  const tz = createSignal("America/Los_Angeles");
+
+  const tick = () => {
+    try {
+      const date = getDateInTimeZone(tz[0]());
+      hour[1](convertTo12Hour(date.getHours()));
+      minute[1](date.getMinutes());
+      second[1](date.getSeconds());
+    } catch {
+      console.log("invalid");
+    }
+  };
+
+  tick();
+
+  setInterval(tick, 1000);
+
+  return (
+    <>
+      <div class="clock metal ">
+        <div class="logo">BABOOLA</div>
+        <div class="rollers-cnt">
+          <RollingNumbersDisplay len={2} value={hour[0]} />
+          :
+          <RollingNumbersDisplay len={2} value={minute[0]} />
+          :
+          <RollingNumbersDisplay len={2} value={second[0]} />
+        </div>
+        <div class="place-inputs">
+          <input
+            type="text"
+            placeholder="IANA Time Zone, e.g. 'Asia/Tokyo'"
+            onChange={(e) => {
+              tz[1](e.target.value.split(" ").join("_"));
+            }}
+          />
+        </div>
+      </div>
+    </>
+  );
+
+  function getDateInTimeZone(timeZone: string) {
+    const date = new Date();
+    const options = { timeZone, hour12: false };
+    const localeString = date.toLocaleString("en-US", options);
+
+    const d = localeString.split(",")[0].split("/");
+    const t = localeString.split(",")[1].trim().split(":");
+    const [month, day, year] = d;
+
+    const [hour, minute, second] = t;
+
+    date.setMonth(Number(month) - 1);
+    date.setDate(Number(day));
+    date.setFullYear(Number(year));
+
+    date.setHours(Number(hour));
+    date.setMinutes(Number(minute));
+    date.setSeconds(Number(second));
+    return date;
+  }
 }
 function RollingNumbersDisplay(props: {
   len: number;
